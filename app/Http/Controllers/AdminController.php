@@ -4,28 +4,36 @@ namespace App\Http\Controllers;
 
 use App\DTO\PostForm;
 use App\Http\Controllers\Controller;
+use App\Http\Filters\PostFilter;
 use App\Http\Requests\Admin\PostFormRequest;
+use App\Models\Ip;
 use App\Models\Post;
 use App\Models\Statistic;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class AdminController extends Controller
 {
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
-    public function index()
+    public function admin(PostFilter $filter, Request $request)
     {
-        $posts = Statistic::orderBy("created_at", "DESC")->paginate(3);
+        $start = microtime(true);
 
-        return view("admin.posts.index", [
+        $posts = Statistic::with('ip')->filter($filter)->orderBy("date", "DESC")->paginate(10);
+        $sum = Statistic::with('ip')->filter($filter)->sum('time');
+
+        $timer = microtime(true) - $start;
+
+        return view('admin', [
             "posts" => $posts,
+            "sum" => $sum,
+            "request" => $request,
+            "timer" => $timer
         ]);
     }
-
-
 }

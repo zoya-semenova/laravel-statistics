@@ -21,19 +21,16 @@ class IpSeeder extends Seeder
             \App\Models\Ip::factory(100000)->create();
         }
         */
-
         for ($i = 0; $i < 3000; $i++) {
             $chunk = [];
             for ($j = 0; $j < 1000; $j++) {
                 $chunk[] = [
                     'ip' => $faker->ipv4(),
-                    //'ip_id' => 1,
                     'created_at' => now()->toDateTimeString(),
                     'updated_at' => now()->toDateTimeString(),
                 ];
             }
             Ip::insert($chunk);
         }
-
     }
 }

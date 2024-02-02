@@ -28,7 +28,6 @@ class VisitFactory extends Factory
 
         return [
             //'ip_id' => $this->faker->randomElement(Ip::pluck('id')),
-            //'ip_id' => '1',
             'ip_id' => Ip::all()->random()->id,
             'start_time' => $start,
             'end_time' => $end

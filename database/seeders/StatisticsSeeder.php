@@ -21,13 +21,7 @@ class StatisticsSeeder extends Seeder
      */
     public function run(Generator $faker)
     {
-        $start = microtime(true);
         //echo $ip = Ip::inRandomOrder()->first()->id;
-        $ip = collect(DB::select('SELECT ip FROM ips TABLESAMPLE SYSTEM_ROWS(1);'))->first()->ip;
-
-        $timer = microtime(true) - $start;
-        $data = [];
-
         for ($i = 0; $i < 3000; $i++) {
             $chunk = [];
             for ($j = 0; $j < 1000; $j++) {

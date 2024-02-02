@@ -10,7 +10,6 @@ class PostFilter extends QueryFilter
      */
     public function mask(string $mask)
     {
-        //$this->builder->whereRaw("ip <<= inet ".$mask);
         $this->builder->whereHas('ip', function($q) use($mask)
         {
             $q->whereRaw("ip <<= inet '$mask'");
